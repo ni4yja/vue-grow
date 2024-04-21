@@ -1,5 +1,4 @@
 <script setup>
-import { ref } from 'vue';
 import BaseIcon from '@/components/base/BaseIcon.vue';
 
 const props = defineProps({
@@ -70,5 +69,7 @@ const props = defineProps({
 .secondary-view {
   background: none;
   border: none;
+  width: 60px;
+  height: 60px;
 }
 </style>

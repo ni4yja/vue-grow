@@ -1,7 +1,11 @@
 <script setup>
-import { ref } from 'vue';
+import LayoutMain from '@/components/LayoutMain.vue';
 </script>
-<template><h1>Hello, Darkness</h1></template>
+<template>
+  <LayoutMain>
+    <h2>Hello, darkness, my old friend</h2>
+  </LayoutMain>
+</template>
 
 <style scoped>
 /* Component CSS here */

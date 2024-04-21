@@ -28,6 +28,7 @@ function handleClose() {
   </div>
 </template>
 
+<style src="@/assets/styles/variables.css" />
 <style scoped>
 .modal {
   position: fixed;
@@ -75,7 +76,7 @@ function handleClose() {
   height: 100%;
   padding: 24px 20px;
   text-align: left;
-  background: #ffffff;
+  background: var(--layout-surface-01);
   border-radius: 12px;
   box-sizing: border-box;
 

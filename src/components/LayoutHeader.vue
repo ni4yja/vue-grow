@@ -1,10 +1,14 @@
 <script setup>
 import { computed } from 'vue';
+import { useUiStore } from '@/stores/ui.js';
 import { useModalStore } from '@/stores/modal.js';
 import { useAuthenticationStore } from '@/stores/authentication.js';
 import { storeToRefs } from 'pinia';
 import ModalAuthentication from '@/components/ModalAuthentication.vue';
 import BaseButton from '@/components/base/BaseButton.vue';
+
+const uiStore = useUiStore();
+const { toggleNav } = uiStore;
 
 const modalStore = useModalStore();
 const { isModalOpen } = storeToRefs(modalStore);
@@ -24,26 +28,28 @@ const authIconName = computed(() => {
 </script>
 
 <template>
-  <div class="layout-header">
+  <header class="layout-header">
     <div class="layout-header__wrapper">
       <div class="layout-header__nav">
-        <BaseButton icon="bars" view="secondary" />
+        <BaseButton class="layout-header__button" @click="toggleNav" icon="bars" view="secondary" />
         <p class="layout-header__logo">VueGrow</p>
       </div>
       <div class="layout-header__action">
-        <BaseButton :icon="authIconName" @click="openModal" view="secondary" />
+        <BaseButton @click="openModal" :icon="authIconName" view="secondary" />
         <Teleport to="body">
           <ModalAuthentication v-if="isModalOpen" />
         </Teleport>
       </div>
     </div>
-  </div>
+  </header>
 </template>
 
+<style src="@/assets/styles/variables.css" />
 <style scoped>
 .layout-header {
   height: 60px;
-  background-color: #f5f5f5;
+  grid-area: header;
+  background-color: var(--layout-surface-02);
 
   @media (min-width: 960px) {
     background-color: transparent;
@@ -55,12 +61,17 @@ const authIconName = computed(() => {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 28px;
+  padding: 0 20px 0 0;
 }
 
 .layout-header__nav {
   display: flex;
+  align-items: center;
   gap: 18px;
+}
+
+.layout-header__button {
+  background-color: var(--layout-surface-02);
 }
 
 .layout-header__logo {
