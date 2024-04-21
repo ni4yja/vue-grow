@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src",
+    "lint": "eslint \"src/**/*.{js,vue}\" --fix",
     "format": "prettier .  --write"
   },
   "dependencies": {
@@ -17,10 +17,12 @@
     "vue-router": "^4.3.0"
   },
   "devDependencies": {
+    "@eslint/js": "^9.1.1",
     "@vitejs/plugin-vue": "^5.0.4",
-    "eslint": "^9.0.0",
+    "eslint": "^9.1.0",
     "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-vue": "^9.24.1",
+    "eslint-plugin-vue": "^9.25.0",
+    "globals": "^15.0.0",
     "prettier": "3.2.5",
     "vite": "^5.2.0",
     "vite-plugin-svg-sprite": "^0.5.1"

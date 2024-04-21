@@ -1,14 +1,18 @@
-module.exports = {
-    env: {
-      node: true,
-    },
-    extends: [
-      'eslint:recommended',
-      'plugin:vue/vue3-recommended',
-      "prettier",
-    ],
-    rules: {
-      // override/add rules settings here, such as:
-      // 'vue/no-unused-vars': 'error'
-    }
-  }
+export default {
+  env: {
+    browser: true,
+    es2021: true,
+    node: true,
+  },
+  extends: ['plugin:vue/vue3-essential', 'eslint:recommended'],
+  parserOptions: {
+    ecmaVersion: 2021, // updated from 12 to the year-based versioning
+    sourceType: 'module',
+  },
+  plugins: ['vue'],
+  rules: {
+    'no-unused-vars': 'warn',
+    'no-console': 'off',
+    'vue/no-unused-components': 'warn',
+  },
+};
