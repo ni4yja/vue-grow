@@ -20,7 +20,7 @@ const { isNavExpanded } = storeToRefs(uiStore);
 
 <style scoped>
 .layout-main {
-  padding: 24px 65px;
+  padding: 24px 18px;
   grid-area: main;
   transition: all 0.3s ease;
 }
@@ -30,9 +30,12 @@ const { isNavExpanded } = storeToRefs(uiStore);
 }
 
 .layout-main--content {
-  width: 600px;
   background-color: aliceblue;
   padding: 17px 18px 20px;
   border-radius: 16px;
+
+  @media (min-width: 960px) {
+    width: 600px;
+  }
 }
 </style>

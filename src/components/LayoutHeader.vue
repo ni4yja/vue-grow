@@ -91,13 +91,13 @@ watchEffect(() => {
 }
 
 .layout-header__nav {
-  width: 300px;
-  display: flex;
-  align-items: center;
-  gap: 18px;
+  position: relative;
+  width: 60px;
 }
 
 .layout-header__nav--colored {
+  width: 300px;
+  transition: width 0.3s ease;
   background-color: var(--layout-surface-02);
 }
 
@@ -111,5 +111,8 @@ watchEffect(() => {
   font-weight: 400;
   font-style: normal;
   margin: 0;
+  position: absolute;
+  top: 10px;
+  left: 78px;
 }
 </style>
