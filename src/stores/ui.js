@@ -3,11 +3,11 @@ import { useLocalStorage } from '@vueuse/core';
 import { ref } from 'vue';
 
 export const useUiStore = defineStore('ui', () => {
-  const isNavOpen = ref(useLocalStorage('isNavOpen', true));
+  const isNavExpanded = ref(useLocalStorage('isNavExpanded', true));
 
   function toggleNav() {
-    isNavOpen.value = !isNavOpen.value;
+    isNavExpanded.value = !isNavExpanded.value;
   }
 
-  return { isNavOpen, toggleNav };
+  return { isNavExpanded, toggleNav };
 });

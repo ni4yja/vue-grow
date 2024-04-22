@@ -1,13 +1,15 @@
 <script setup>
-import { computed } from 'vue';
+import { ref, computed, watchEffect } from 'vue';
 import { useUiStore } from '@/stores/ui.js';
 import { useModalStore } from '@/stores/modal.js';
 import { useAuthenticationStore } from '@/stores/authentication.js';
 import { storeToRefs } from 'pinia';
 import ModalAuthentication from '@/components/ModalAuthentication.vue';
 import BaseButton from '@/components/base/BaseButton.vue';
+import { useWindowScroll } from '@vueuse/core';
 
 const uiStore = useUiStore();
+const { isNavExpanded } = storeToRefs(uiStore);
 const { toggleNav } = uiStore;
 
 const modalStore = useModalStore();
@@ -25,12 +27,29 @@ const authIconName = computed(() => {
   }
   return 'arrow-right-to-square';
 });
+
+const isHeaderFixed = ref(false);
+const { y } = useWindowScroll();
+
+watchEffect(() => {
+  isHeaderFixed.value = y.value > 100;
+});
 </script>
 
 <template>
-  <header class="layout-header">
+  <header
+    class="layout-header"
+    :class="{
+      'layout-header--fixed': isHeaderFixed,
+    }"
+  >
     <div class="layout-header__wrapper">
-      <div class="layout-header__nav">
+      <div
+        class="layout-header__nav"
+        :class="{
+          'layout-header__nav--colored': isNavExpanded,
+        }"
+      >
         <BaseButton class="layout-header__button" @click="toggleNav" icon="bars" view="secondary" />
         <p class="layout-header__logo">VueGrow</p>
       </div>
@@ -50,10 +69,17 @@ const authIconName = computed(() => {
   height: 60px;
   grid-area: header;
   background-color: var(--layout-surface-02);
+  z-index: 1;
 
   @media (min-width: 960px) {
-    background-color: transparent;
+    background-color: var(--layout-surface-01);
   }
+}
+
+.layout-header--fixed {
+  position: fixed;
+  width: 100%;
+  background-color: var(--layout-surface-02);
 }
 
 .layout-header__wrapper {
@@ -65,9 +91,14 @@ const authIconName = computed(() => {
 }
 
 .layout-header__nav {
+  width: 300px;
   display: flex;
   align-items: center;
   gap: 18px;
+}
+
+.layout-header__nav--colored {
+  background-color: var(--layout-surface-02);
 }
 
 .layout-header__button {

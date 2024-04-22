@@ -1,11 +1,38 @@
-<script setup></script>
+<script setup>
+import { useUiStore } from '@/stores/ui.js';
+import { storeToRefs } from 'pinia';
+
+const uiStore = useUiStore();
+const { isNavExpanded } = storeToRefs(uiStore);
+</script>
 <template>
-  <main class="layout-main"><slot></slot></main>
+  <main
+    class="layout-main"
+    :class="{
+      'layout-main--collapsed': isNavExpanded,
+    }"
+  >
+    <div class="layout-main--content">
+      <slot></slot>
+    </div>
+  </main>
 </template>
 
 <style scoped>
 .layout-main {
   padding: 24px 65px;
   grid-area: main;
+  transition: all 0.3s ease;
+}
+
+.layout-main--collapsed {
+  padding-left: 300px;
+}
+
+.layout-main--content {
+  width: 600px;
+  background-color: aliceblue;
+  padding: 17px 18px 20px;
+  border-radius: 16px;
 }
 </style>
