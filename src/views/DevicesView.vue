@@ -1,8 +1,12 @@
 <script setup>
 import { ref } from 'vue';
 import { fetchDevices } from '@/services/devicesService.js';
+import { useAuthenticationStore } from '@/stores/authentication.js';
 import BaseButton from '@/components/base/BaseButton.vue';
 import LayoutMain from '../components/LayoutMain.vue';
+
+const authenticationStore = useAuthenticationStore();
+const { stopAuthenticationProcess } = authenticationStore;
 
 const connectedDevices = ref([]);
 
@@ -15,6 +19,7 @@ async function handleFetchDevices() {
       sorting: [],
     });
   } catch (error) {
+    stopAuthenticationProcess();
     console.error('Failed to fetch devices:', error);
   }
 }

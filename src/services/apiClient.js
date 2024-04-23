@@ -1,20 +1,18 @@
-export async function apiCall({ url, method, data, headers }) {
+import axios from 'axios';
+
+export async function apiCall({ url, method = 'GET', data, headers }) {
   try {
-    const response = await fetch(url, {
-      method: method || 'GET',
+    const response = await axios({
+      url: url,
+      method: method,
       headers: {
-        'Content-Type': 'application/json',
         ...headers,
       },
-      body: data ? JSON.stringify(data) : null,
+      data: data,
     });
-    const responseData = await response.json();
-    if (!response.ok) {
-      throw new Error(responseData.message || 'Something went wrong');
-    }
-    return responseData;
+    return response.data;
   } catch (error) {
-    console.error('API call failed:', error);
-    throw error;
+    console.error('API call failed:', error.message);
+    throw new Error(error.response?.data?.message || 'Something went wrong');
   }
 }
