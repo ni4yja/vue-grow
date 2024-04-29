@@ -30,12 +30,11 @@ const { isNavExpanded } = storeToRefs(uiStore);
 }
 
 .layout-main--content {
-  background-color: aliceblue;
   padding: 17px 18px 20px;
   border-radius: 16px;
 
   @media (min-width: 960px) {
-    width: 600px;
+    width: 800px;
   }
 }
 </style>

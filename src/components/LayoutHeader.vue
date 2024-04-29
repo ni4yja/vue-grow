@@ -29,9 +29,6 @@ const authIconName = computed(() => {
   return 'arrow-right-to-square';
 });
 
-console.log(isAuthenticationSuccessful.value);
-console.log(authIconName.value);
-
 const isHeaderFixed = ref(false);
 const { y } = useWindowScroll();
 

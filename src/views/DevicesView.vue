@@ -3,7 +3,8 @@ import { ref } from 'vue';
 import { fetchDevices } from '@/services/devicesService.js';
 import { useAuthenticationStore } from '@/stores/authentication.js';
 import BaseButton from '@/components/base/BaseButton.vue';
-import LayoutMain from '../components/LayoutMain.vue';
+import LayoutMain from '@/components/LayoutMain.vue';
+import BaseTable from '@/components/base/BaseTable.vue';
 
 const authenticationStore = useAuthenticationStore();
 const { stopAuthenticationProcess } = authenticationStore;
@@ -23,19 +24,33 @@ async function handleFetchDevices() {
     console.error('Failed to fetch devices:', error);
   }
 }
+
+const columns = ref([
+  { field: 'name', label: 'Name' },
+  { field: 'id', label: 'ID' },
+]);
 </script>
+
 <template>
-  <LayoutMain
-    ><div>
+  <LayoutMain>
+    <div class="devices-view--actions">
       <h1>Connected Devices</h1>
       <BaseButton @click="handleFetchDevices" label="Fetch Devices" />
-      <ul>
-        <li v-for="device in connectedDevices" :key="device.id">{{ device.name }}</li>
-      </ul>
-    </div></LayoutMain
-  >
+    </div>
+    <BaseTable :items="connectedDevices" :columns="columns">
+      <template #name="{ item }">
+        <span>{{ item.name }}</span>
+      </template>
+    </BaseTable>
+  </LayoutMain>
 </template>
 
 <style scoped>
-/* Component CSS here */
+.devices-view--actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
 </style>
