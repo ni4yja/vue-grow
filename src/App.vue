@@ -13,6 +13,7 @@ import LayoutNavBar from '@/components/LayoutNavBar.vue';
 
 <style scoped>
 .root-page {
+  position: relative;
   display: grid;
   height: 100vh;
   grid-template-columns: 60px 3fr;

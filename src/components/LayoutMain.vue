@@ -26,7 +26,9 @@ const { isNavExpanded } = storeToRefs(uiStore);
 }
 
 .layout-main--collapsed {
-  padding-left: 300px;
+  @media (min-width: 960px) {
+    padding-left: 300px;
+  }
 }
 
 .layout-main--content {

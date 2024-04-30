@@ -42,7 +42,11 @@ const showSuccessMessage = computed(() => isAuthenticationSuccessful.value);
         v-model="applicationToken"
         placeholder="Enter your application token"
       />
-      <BaseButton @click="handleAuthentication" label="Authenticate" />
+      <BaseButton
+        class="authenticate-user__button"
+        @click="handleAuthentication"
+        label="Authenticate"
+      />
     </div>
     <div v-if="showSuccessMessage">
       <p>Your token worked. You're successfully authenticated.</p>
@@ -69,9 +73,18 @@ const showSuccessMessage = computed(() => isAuthenticationSuccessful.value);
 
 .authenticate-user__field {
   display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .authenticate-user__input {
+  padding: 0.5rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.authenticate-user__button {
+  flex: 1;
   width: 100%;
 }
 </style>

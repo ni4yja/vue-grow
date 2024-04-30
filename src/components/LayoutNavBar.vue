@@ -42,6 +42,7 @@ const { isNavExpanded } = storeToRefs(uiStore);
 }
 
 .layout-nav-bar--expanded {
+  z-index: 10;
   width: 300px;
   transition: width 0.3s ease;
 
