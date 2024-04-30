@@ -5,7 +5,7 @@ import { fetchDevices } from '@/services/devicesService.js';
 
 export const useDevicesStore = defineStore('devices', () => {
   const devicesList = ref(useLocalStorage('devicesList', []));
-  const fetchErrorMessage = ref();
+  const fetchErrorMessage = ref('');
 
   async function setDevicesList() {
     try {
@@ -15,6 +15,7 @@ export const useDevicesStore = defineStore('devices', () => {
         per_page: 5,
         sorting: [],
       });
+      fetchErrorMessage.value = '';
     } catch (error) {
       fetchErrorMessage.value = `Failed to fetch devices because of ${error}`;
     }

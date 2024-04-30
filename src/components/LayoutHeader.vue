@@ -20,13 +20,7 @@ const authenticationStore = useAuthenticationStore();
 const { isAuthenticationSuccessful } = storeToRefs(authenticationStore);
 
 const authIconName = computed(() => {
-  if (isAuthenticationSuccessful.value === true) {
-    return 'crown-diamond';
-  } else if (!isAuthenticationSuccessful.value) {
-    return 'triangle-exclamation';
-  } else {
-    return 'arrow-right-to-square';
-  }
+  return isAuthenticationSuccessful.value ? 'crown-diamond' : 'triangle-exclamation';
 });
 
 const isHeaderFixed = ref(false);

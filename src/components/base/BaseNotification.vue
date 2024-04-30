@@ -24,6 +24,7 @@ const props = defineProps({
   padding: 13px 14px 13px 45px;
   border-radius: 5px;
   box-sizing: border-box;
+  margin-bottom: 1rem;
 }
 
 .notification--success {

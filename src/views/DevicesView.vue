@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { useDevicesStore } from '@/stores/devices.js';
 import { useAuthenticationStore } from '@/stores/authentication.js';
 import { storeToRefs } from 'pinia';
@@ -20,6 +20,18 @@ const columns = ref([
   { field: 'id', label: 'ID' },
   { field: 'status', label: 'Status' },
 ]);
+
+const shouldShowTable = computed(() => {
+  return isAuthenticationSuccessful.value && devicesList.value.length;
+});
+
+const shouldShowWarning = computed(() => {
+  return isAuthenticationSuccessful.value && !devicesList.value.length;
+});
+
+const shouldShowError = computed(() => {
+  return fetchErrorMessage.value && fetchErrorMessage.value.length > 0;
+});
 </script>
 
 <template>
@@ -28,11 +40,7 @@ const columns = ref([
       <h2 class="devices-view--title">Connected Devices</h2>
       <BaseButton @click="setDevicesList" class="devices-view--button" label="Fetch Devices" />
     </div>
-    <BaseTable
-      v-if="isAuthenticationSuccessful && devicesList.length"
-      :items="devicesList"
-      :columns="columns"
-    >
+    <BaseTable v-if="shouldShowTable" :items="devicesList" :columns="columns">
       <template #name="{ item }">
         <span>{{ item.name }}</span>
       </template>
@@ -44,15 +52,11 @@ const columns = ref([
       </template>
     </BaseTable>
     <BaseNotification
-      v-if="isAuthenticationSuccessful && !devicesList.length"
+      v-if="shouldShowWarning"
       view="warning"
       text="Your device list is empty. Click the button to fetch devices."
     />
-    <BaseNotification
-      v-if="fetchErrorMessage && fetchErrorMessage.length"
-      view="error"
-      :text="fetchErrorMessage"
-    />
+    <BaseNotification v-if="shouldShowError" view="error" :text="fetchErrorMessage" />
   </LayoutMain>
 </template>
 
