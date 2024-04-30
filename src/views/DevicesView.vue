@@ -1,14 +1,19 @@
 <script setup>
 import { ref } from 'vue';
 import { useDevicesStore } from '@/stores/devices.js';
+import { useAuthenticationStore } from '@/stores/authentication.js';
 import { storeToRefs } from 'pinia';
 import BaseButton from '@/components/base/BaseButton.vue';
-import LayoutMain from '@/components/LayoutMain.vue';
 import BaseTable from '@/components/base/BaseTable.vue';
+import BaseNotification from '@/components/base/BaseNotification.vue';
+import LayoutMain from '@/components/LayoutMain.vue';
 
 const devicesStore = useDevicesStore();
-const { devicesList } = storeToRefs(devicesStore);
+const { devicesList, fetchErrorMessage } = storeToRefs(devicesStore);
 const { setDevicesList } = devicesStore;
+
+const authenticationStore = useAuthenticationStore();
+const { isAuthenticationSuccessful } = storeToRefs(authenticationStore);
 
 const columns = ref([
   { field: 'name', label: 'Name' },
@@ -23,7 +28,11 @@ const columns = ref([
       <h2 class="devices-view--title">Connected Devices</h2>
       <BaseButton @click="setDevicesList" class="devices-view--button" label="Fetch Devices" />
     </div>
-    <BaseTable :items="devicesList" :columns="columns">
+    <BaseTable
+      v-if="isAuthenticationSuccessful && devicesList.length"
+      :items="devicesList"
+      :columns="columns"
+    >
       <template #name="{ item }">
         <span>{{ item.name }}</span>
       </template>
@@ -34,6 +43,16 @@ const columns = ref([
         <span>{{ item.status.description }}</span>
       </template>
     </BaseTable>
+    <BaseNotification
+      v-if="isAuthenticationSuccessful && !devicesList.length"
+      view="warning"
+      text="Your device list is empty. Click the button to fetch devices."
+    />
+    <BaseNotification
+      v-if="fetchErrorMessage && fetchErrorMessage.length"
+      view="error"
+      :text="fetchErrorMessage"
+    />
   </LayoutMain>
 </template>
 

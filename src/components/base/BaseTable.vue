@@ -23,12 +23,12 @@ const gridStyle = computed(() => ({
 </script>
 
 <template>
-  <div class="grid-table" :style="gridStyle">
-    <div class="grid-header" v-for="column in columns" :key="column.field" :style="columnStyle">
+  <div class="table" :style="gridStyle">
+    <div class="table-header" v-for="column in columns" :key="column.field" :style="columnStyle">
       {{ column.label }}
     </div>
-    <div v-for="item in items" :key="item.id" class="grid-row">
-      <div class="grid-cell" v-for="column in columns" :key="column.field" :style="columnStyle">
+    <div v-for="item in items" :key="item.id" class="table-row">
+      <div class="table-cell" v-for="column in columns" :key="column.field" :style="columnStyle">
         <slot :name="column.field" :item="item">
           {{ item[column.field] }}
         </slot>
@@ -39,30 +39,28 @@ const gridStyle = computed(() => ({
 
 <style src="@/assets/styles/variables.css" />
 <style scoped>
-.grid-table {
+.table {
   display: grid;
+  margin-bottom: 2rem;
 }
 
-.grid-header,
-.grid-cell {
+.table-header,
+.table-cell {
   padding: 0.5rem;
   text-align: left;
 }
 
-.grid-header {
+.table-header {
   background-color: var(--layout-surface-02);
   border-bottom: 2px solid #000;
-}
-
-.grid-cell {
-  border-bottom: 1px dashed #000;
-}
-
-.grid-header {
   font-weight: bold;
 }
 
-.grid-row {
+.table-cell {
+  border-bottom: 1px dashed #000;
+}
+
+.table-row {
   display: contents;
 }
 </style>

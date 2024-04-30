@@ -5,4 +5,8 @@ body {
 
   --layout-surface-01: #ffffff;
   --layout-surface-02: #f5f5f5;
+
+  --support-success: #ccecd1;
+  --support-warning: #fce3cc;
+  --support-error: #ffdddd;
 }

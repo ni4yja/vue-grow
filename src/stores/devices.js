@@ -2,14 +2,12 @@ import { ref } from 'vue';
 import { defineStore } from 'pinia';
 import { useLocalStorage } from '@vueuse/core';
 import { fetchDevices } from '@/services/devicesService.js';
-import { useAuthenticationStore } from '@/stores/authentication.js';
 
 export const useDevicesStore = defineStore('devices', () => {
   const devicesList = ref(useLocalStorage('devicesList', []));
+  const fetchErrorMessage = ref();
 
   async function setDevicesList() {
-    const authenticationStore = useAuthenticationStore();
-    const { stopAuthenticationProcess } = authenticationStore;
     try {
       devicesList.value = await fetchDevices({
         filter: { and: [], or: [] },
@@ -18,13 +16,13 @@ export const useDevicesStore = defineStore('devices', () => {
         sorting: [],
       });
     } catch (error) {
-      stopAuthenticationProcess();
-      console.error('Failed to fetch devices:', error);
+      fetchErrorMessage.value = `Failed to fetch devices because of ${error}`;
     }
   }
 
   return {
     devicesList,
+    fetchErrorMessage,
     setDevicesList,
   };
 });

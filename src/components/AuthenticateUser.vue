@@ -1,41 +1,36 @@
 <script setup>
 import { ref, computed } from 'vue';
 import { storeToRefs } from 'pinia';
-import { authenticate } from '@/services/authService';
 import { useModalStore } from '@/stores/modal.js';
 import { useAuthenticationStore } from '@/stores/authentication.js';
 import BaseButton from '@/components/base/BaseButton.vue';
+import BaseNotification from '@/components/base/BaseNotification.vue';
 
 const modalStore = useModalStore();
 const { closeModal } = modalStore;
 
-const authenticationStore = useAuthenticationStore();
-const { isAuthenticationSuccessful } = storeToRefs(authenticationStore);
-const { setAuthToken, completeAuthenticationProcess, stopAuthenticationProcess } =
-  authenticationStore;
-
 const applicationToken = ref('');
 
-async function handleAuthentication() {
-  try {
-    const data = await authenticate(applicationToken.value);
-    setAuthToken(data.auth_token);
-    completeAuthenticationProcess();
-  } catch (error) {
-    console.error('Authentication failed:', error);
-    stopAuthenticationProcess();
-  }
+const authenticationStore = useAuthenticationStore();
+const { isAuthenticationSuccessful, authErrorMessage } = storeToRefs(authenticationStore);
+const { handleAuthentication } = authenticationStore;
+
+function authenticateUser() {
+  handleAuthentication(applicationToken.value);
 }
 
-const showSuccessMessage = computed(() => isAuthenticationSuccessful.value);
+const showErrorMessage = computed(() => {
+  return authErrorMessage.value.length > 0 && !isAuthenticationSuccessful.value;
+});
 </script>
+
 <template>
   <div class="authenticate-user">
     <div class="authenticate-user__header">
-      <h2>Authenticatation with your Application Token</h2>
+      <h2>Authentication with your Application Token</h2>
       <BaseButton @click="closeModal" icon="xmark" view="secondary" />
     </div>
-    <div v-if="!showSuccessMessage" class="authenticate-user__field">
+    <div v-if="isAuthenticationSuccessful !== true" class="authenticate-user__field">
       <input
         type="text"
         class="authenticate-user__input"
@@ -44,13 +39,16 @@ const showSuccessMessage = computed(() => isAuthenticationSuccessful.value);
       />
       <BaseButton
         class="authenticate-user__button"
-        @click="handleAuthentication"
+        @click="authenticateUser"
         label="Authenticate"
       />
     </div>
-    <div v-if="showSuccessMessage">
-      <p>Your token worked. You're successfully authenticated.</p>
-    </div>
+    <BaseNotification
+      v-if="isAuthenticationSuccessful === true"
+      view="success"
+      text="Your token worked. You're successfully authenticated."
+    />
+    <BaseNotification v-if="showErrorMessage" view="error" :text="authErrorMessage" />
   </div>
 </template>
 
@@ -66,7 +64,7 @@ const showSuccessMessage = computed(() => isAuthenticationSuccessful.value);
 .authenticate-user__header {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
   gap: 1rem;
   margin-bottom: 2rem;
 }
@@ -75,6 +73,7 @@ const showSuccessMessage = computed(() => isAuthenticationSuccessful.value);
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  margin-bottom: 2rem;
 }
 
 .authenticate-user__input {
