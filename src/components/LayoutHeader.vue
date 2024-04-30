@@ -23,7 +23,7 @@ const authIconName = computed(() => {
   if (isAuthenticationSuccessful.value === false) {
     return 'triangle-exclamation';
   }
-  if (isAuthenticationSuccessful.value) {
+  if (isAuthenticationSuccessful.value === true) {
     return 'crown-diamond';
   }
   return 'arrow-right-to-square';

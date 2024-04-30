@@ -19,7 +19,6 @@ const columnStyle = computed(() => ({
 const gridStyle = computed(() => ({
   display: 'grid',
   'grid-template-columns': `repeat(${props.columns.length}, 1fr)`,
-  'row-gap': '1rem',
 }));
 </script>
 

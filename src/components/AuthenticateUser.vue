@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { storeToRefs } from 'pinia';
 import { authenticate } from '@/services/authService';
 import { useModalStore } from '@/stores/modal.js';
@@ -26,6 +26,8 @@ async function handleAuthentication() {
     stopAuthenticationProcess();
   }
 }
+
+const showSuccessMessage = computed(() => isAuthenticationSuccessful.value);
 </script>
 <template>
   <div class="authenticate-user">
@@ -33,7 +35,7 @@ async function handleAuthentication() {
       <h2>Authenticatation with your Application Token</h2>
       <BaseButton @click="closeModal" icon="xmark" view="secondary" />
     </div>
-    <div v-if="!isAuthenticationSuccessful" class="authenticate-user__field">
+    <div v-if="!showSuccessMessage" class="authenticate-user__field">
       <input
         type="text"
         class="authenticate-user__input"
@@ -42,7 +44,7 @@ async function handleAuthentication() {
       />
       <BaseButton @click="handleAuthentication" label="Authenticate" />
     </div>
-    <div v-if="isAuthenticationSuccessful">
+    <div v-if="showSuccessMessage">
       <p>Your token worked. You're successfully authenticated.</p>
     </div>
   </div>
