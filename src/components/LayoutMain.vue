@@ -34,7 +34,7 @@ const { isNavExpanded } = storeToRefs(uiStore);
   border-radius: 16px;
 
   @media (min-width: 960px) {
-    width: 800px;
+    max-width: 800px;
   }
 }
 </style>

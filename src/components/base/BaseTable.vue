@@ -37,6 +37,7 @@ const gridStyle = computed(() => ({
   </div>
 </template>
 
+<style src="@/assets/styles/variables.css" />
 <style scoped>
 .grid-table {
   display: grid;
@@ -49,6 +50,7 @@ const gridStyle = computed(() => ({
 }
 
 .grid-header {
+  background-color: var(--layout-surface-02);
   border-bottom: 2px solid #000;
 }
 
