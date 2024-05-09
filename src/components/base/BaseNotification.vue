@@ -38,4 +38,8 @@ const props = defineProps({
 .notification--error {
   background-color: var(--support-error);
 }
+
+.notification--info {
+  background-color: var(--support-info);
+}
 </style>
