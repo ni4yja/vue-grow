@@ -1,12 +1,12 @@
 <script setup>
-import { ref, computed, watchEffect } from 'vue';
+import { ref, computed, watchEffect, watch } from 'vue';
 import { useUiStore } from '@/stores/ui.js';
 import { useModalStore } from '@/stores/modal.js';
 import { useAuthenticationStore } from '@/stores/authentication.js';
 import { storeToRefs } from 'pinia';
 import ModalAuthentication from '@/components/ModalAuthentication.vue';
 import BaseButton from '@/components/base/BaseButton.vue';
-import { useWindowScroll } from '@vueuse/core';
+import { useWindowScroll, useNow } from '@vueuse/core';
 
 const uiStore = useUiStore();
 const { isNavExpanded } = storeToRefs(uiStore);
@@ -17,7 +17,8 @@ const { isModalOpen } = storeToRefs(modalStore);
 const { openModal } = modalStore;
 
 const authenticationStore = useAuthenticationStore();
-const { isAuthenticationSuccessful } = storeToRefs(authenticationStore);
+const { isAuthenticationSuccessful, authTokenExpiry } = storeToRefs(authenticationStore);
+const { clearAuthToken } = authenticationStore;
 
 const authIconName = computed(() => {
   return isAuthenticationSuccessful.value ? 'crown-diamond' : 'triangle-exclamation';
@@ -29,6 +30,17 @@ const { y } = useWindowScroll();
 watchEffect(() => {
   isHeaderFixed.value = y.value > 100;
 });
+
+const now = useNow({ interval: 10000 });
+
+function checkExpiration() {
+  const expiryTime = new Date(authTokenExpiry.value);
+  if (expiryTime < now.value) {
+    clearAuthToken();
+  }
+}
+
+watch(now, checkExpiration);
 </script>
 
 <template>

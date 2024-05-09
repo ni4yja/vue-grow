@@ -7,11 +7,15 @@ import { storeToRefs } from 'pinia';
 
 export const useAuthenticationStore = defineStore('authentication', () => {
   const authToken = ref(useLocalStorage('authToken', ''));
+  const authTokenExpiry = ref(useLocalStorage('authTokenExpiry', ''));
   const isAuthenticationSuccessful = ref(useLocalStorage('isAuthenticationSuccessful', false));
   const authErrorMessage = ref('');
 
   function setAuthToken(authTokenValue) {
     authToken.value = authTokenValue;
+    const expiryTime = new Date();
+    expiryTime.setMinutes(expiryTime.getMinutes() + 60);
+    authTokenExpiry.value = expiryTime.toISOString();
   }
 
   async function handleAuthentication(appTokenValue) {
@@ -21,16 +25,26 @@ export const useAuthenticationStore = defineStore('authentication', () => {
       const data = await authenticate(appTokenValue);
       setAuthToken(data.auth_token);
       isAuthenticationSuccessful.value = true;
-      fetchErrorMessage.value = false;
+      authErrorMessage.value = '';
+      fetchErrorMessage.value = '';
     } catch (error) {
       authErrorMessage.value = `Authentication failed because of ${error}`;
       isAuthenticationSuccessful.value = false;
     }
   }
 
+  function clearAuthToken() {
+    authToken.value = null;
+    authTokenExpiry.value = null;
+    isAuthenticationSuccessful.value = false;
+    authErrorMessage.value = 'Your token has axpired. Please, log in again.';
+  }
+
   return {
+    authTokenExpiry,
     isAuthenticationSuccessful,
     authErrorMessage,
     handleAuthentication,
+    clearAuthToken,
   };
 });
