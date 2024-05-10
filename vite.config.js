@@ -4,6 +4,7 @@ import path from 'path';
 import createSvgSpritePlugin from 'vite-plugin-svg-sprite';
 
 export default defineConfig({
+  base: '/vue-grow/',
   plugins: [
     vue(),
     createSvgSpritePlugin({
