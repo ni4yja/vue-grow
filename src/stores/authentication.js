@@ -41,6 +41,7 @@ export const useAuthenticationStore = defineStore('authentication', () => {
   }
 
   return {
+    authToken,
     authTokenExpiry,
     isAuthenticationSuccessful,
     authErrorMessage,
