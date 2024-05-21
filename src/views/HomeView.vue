@@ -1,9 +1,9 @@
 <script setup>
-import LayoutMain from '@/components/LayoutMain.vue';
 import BaseNotification from '@/components/base/BaseNotification.vue';
+import ContentWrapper from '@/components/ContentWrapper.vue';
 </script>
 <template>
-  <LayoutMain>
+  <ContentWrapper>
     <BaseNotification
       view="info"
       text="This is my pet project, developed as part of my Personal Development Plan after completing the 'Vue - The Complete Guide' course on Udemy. It utilizes the Composition API syntax and incorporates the official Vue.js Router, Axios for handling authentication and data fetching, and Pinia for state management. Additionally, I've implemented the VueUse library, a collection of utility functions based on Composition API to enhance local storage interactions, detect user scrolling, and manage reactive date data (for token expiration)."
@@ -20,9 +20,5 @@ import BaseNotification from '@/components/base/BaseNotification.vue';
       view="error"
       text="As I developed the VueGrow project, I continually found new features I wanted to implement. However, due to time constraints, the design isn’t yet pixel-perfect, and features like loading states and pagination are still missing. In the future, I'm looking forward to experimenting with Pinia Colada, a new, but not yet production-ready, data fetching library for Pinia that could enhance the project's capabilities."
     />
-  </LayoutMain>
+  </ContentWrapper>
 </template>
-
-<style scoped>
-/* Component CSS here */
-</style>

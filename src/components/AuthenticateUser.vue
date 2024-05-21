@@ -12,7 +12,8 @@ const { closeModal } = modalStore;
 const applicationToken = ref('');
 
 const authenticationStore = useAuthenticationStore();
-const { isAuthenticationSuccessful, authErrorMessage } = storeToRefs(authenticationStore);
+const { isAuthenticationSuccessful, authErrorMessage } =
+  storeToRefs(authenticationStore);
 const { handleAuthentication } = authenticationStore;
 
 function authenticateUser() {
@@ -20,7 +21,10 @@ function authenticateUser() {
 }
 
 const showErrorMessage = computed(() => {
-  return authErrorMessage.value.length > 0 && !isAuthenticationSuccessful.value;
+  return (
+    authErrorMessage.value?.length &&
+    !isAuthenticationSuccessful.value
+  );
 });
 </script>
 
@@ -28,9 +32,16 @@ const showErrorMessage = computed(() => {
   <div class="authenticate-user">
     <div class="authenticate-user__header">
       <h2>Authentication with your Application Token</h2>
-      <BaseButton @click="closeModal" icon="xmark" view="secondary" />
+      <BaseButton
+        @click="closeModal"
+        icon="xmark"
+        view="secondary"
+      />
     </div>
-    <div v-if="isAuthenticationSuccessful !== true" class="authenticate-user__field">
+    <div
+      v-if="!isAuthenticationSuccessful"
+      class="authenticate-user__field"
+    >
       <input
         type="text"
         class="authenticate-user__input"
@@ -44,11 +55,15 @@ const showErrorMessage = computed(() => {
       />
     </div>
     <BaseNotification
-      v-if="isAuthenticationSuccessful === true"
+      v-if="isAuthenticationSuccessful"
       view="success"
       text="Your token worked. You're successfully authenticated."
     />
-    <BaseNotification v-if="showErrorMessage" view="error" :text="authErrorMessage" />
+    <BaseNotification
+      v-if="showErrorMessage"
+      view="error"
+      :text="authErrorMessage"
+    />
   </div>
 </template>
 

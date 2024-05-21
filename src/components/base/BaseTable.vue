@@ -24,11 +24,25 @@ const gridStyle = computed(() => ({
 
 <template>
   <div class="table" :style="gridStyle">
-    <div class="table-header" v-for="column in columns" :key="column.field" :style="columnStyle">
+    <div
+      class="table-header"
+      v-for="column in columns"
+      :key="column.field"
+      :style="columnStyle"
+    >
       {{ column.label }}
     </div>
-    <div v-for="item in items" :key="item.id" class="table-row">
-      <div class="table-cell" v-for="column in columns" :key="column.field" :style="columnStyle">
+    <div
+      v-for="item in items"
+      :key="item.id"
+      class="table-row"
+    >
+      <div
+        class="table-cell"
+        v-for="column in columns"
+        :key="column.field"
+        :style="columnStyle"
+      >
         <slot :name="column.field" :item="item">
           {{ item[column.field] }}
         </slot>
@@ -37,7 +51,6 @@ const gridStyle = computed(() => ({
   </div>
 </template>
 
-<style src="@/assets/styles/variables.css" />
 <style scoped>
 .table {
   display: grid;

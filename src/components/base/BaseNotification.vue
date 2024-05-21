@@ -11,14 +11,16 @@ const props = defineProps({
 });
 </script>
 <template>
-  <div class="notification" :class="`notification--${props.view}`">
+  <div
+    class="notification"
+    :class="`notification--${props.view}`"
+  >
     <slot>
       <p>{{ text }}</p>
     </slot>
   </div>
 </template>
 
-<style src="@/assets/styles/variables.css" />
 <style scoped>
 .notification {
   padding: 13px 14px 13px 45px;

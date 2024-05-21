@@ -6,14 +6,17 @@ import { storeToRefs } from 'pinia';
 import BaseButton from '@/components/base/BaseButton.vue';
 import BaseTable from '@/components/base/BaseTable.vue';
 import BaseNotification from '@/components/base/BaseNotification.vue';
-import LayoutMain from '@/components/LayoutMain.vue';
+import ContentWrapper from '@/components/ContentWrapper.vue';
 
 const devicesStore = useDevicesStore();
-const { devicesList, fetchErrorMessage } = storeToRefs(devicesStore);
+const { devicesList, fetchErrorMessage } =
+  storeToRefs(devicesStore);
 const { setDevicesList } = devicesStore;
 
 const authenticationStore = useAuthenticationStore();
-const { isAuthenticationSuccessful } = storeToRefs(authenticationStore);
+const { isAuthenticationSuccessful } = storeToRefs(
+  authenticationStore,
+);
 
 const columns = ref([
   { field: 'name', label: 'Name' },
@@ -22,25 +25,42 @@ const columns = ref([
 ]);
 
 const shouldShowTable = computed(() => {
-  return isAuthenticationSuccessful.value && devicesList.value.length;
+  return (
+    isAuthenticationSuccessful.value &&
+    devicesList.value.length
+  );
 });
 
 const shouldShowWarning = computed(() => {
-  return isAuthenticationSuccessful.value && !devicesList.value.length;
+  return (
+    isAuthenticationSuccessful.value &&
+    !devicesList.value.length
+  );
 });
 
 const shouldShowError = computed(() => {
-  return fetchErrorMessage.value && fetchErrorMessage.value.length > 0;
+  return (
+    fetchErrorMessage.value &&
+    fetchErrorMessage.value.length > 0
+  );
 });
 </script>
 
 <template>
-  <LayoutMain>
+  <ContentWrapper>
     <div class="devices-view--actions">
       <h2 class="devices-view--title">Connected Devices</h2>
-      <BaseButton @click="setDevicesList" class="devices-view--button" label="Fetch Devices" />
+      <BaseButton
+        @click="setDevicesList"
+        class="devices-view--button"
+        label="Fetch Devices"
+      />
     </div>
-    <BaseTable v-if="shouldShowTable" :items="devicesList" :columns="columns">
+    <BaseTable
+      v-if="shouldShowTable"
+      :items="devicesList"
+      :columns="columns"
+    >
       <template #name="{ item }">
         <span>{{ item.name }}</span>
       </template>
@@ -56,8 +76,12 @@ const shouldShowError = computed(() => {
       view="warning"
       text="Your device list is empty. Click the button to fetch devices."
     />
-    <BaseNotification v-if="shouldShowError" view="error" :text="fetchErrorMessage" />
-  </LayoutMain>
+    <BaseNotification
+      v-if="shouldShowError"
+      view="error"
+      :text="fetchErrorMessage"
+    />
+  </ContentWrapper>
 </template>
 
 <style scoped>

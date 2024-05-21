@@ -28,7 +28,6 @@ function handleClose() {
   </div>
 </template>
 
-<style src="@/assets/styles/variables.css" />
 <style scoped>
 .modal {
   position: fixed;

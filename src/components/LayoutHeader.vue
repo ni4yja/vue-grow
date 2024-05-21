@@ -17,11 +17,14 @@ const { isModalOpen } = storeToRefs(modalStore);
 const { openModal } = modalStore;
 
 const authenticationStore = useAuthenticationStore();
-const { isAuthenticationSuccessful, authTokenExpiry } = storeToRefs(authenticationStore);
+const { isAuthenticationSuccessful, authTokenExpiry } =
+  storeToRefs(authenticationStore);
 const { clearAuthToken } = authenticationStore;
 
 const authIconName = computed(() => {
-  return isAuthenticationSuccessful.value ? 'crown-diamond' : 'triangle-exclamation';
+  return isAuthenticationSuccessful.value
+    ? 'crown-diamond'
+    : 'triangle-exclamation';
 });
 
 const isHeaderFixed = ref(false);
@@ -57,11 +60,20 @@ watch(now, checkExpiration);
           'layout-header__nav--colored': isNavExpanded,
         }"
       >
-        <BaseButton class="layout-header__button" @click="toggleNav" icon="bars" view="secondary" />
+        <BaseButton
+          class="layout-header__button"
+          @click="toggleNav"
+          icon="bars"
+          view="secondary"
+        />
         <p class="layout-header__logo">VueGrow</p>
       </div>
       <div class="layout-header__action">
-        <BaseButton @click="openModal" :icon="authIconName" view="secondary" />
+        <BaseButton
+          @click="openModal"
+          :icon="authIconName"
+          view="secondary"
+        />
         <Teleport to="body">
           <ModalAuthentication v-if="isModalOpen" />
         </Teleport>
@@ -70,7 +82,6 @@ watch(now, checkExpiration);
   </header>
 </template>
 
-<style src="@/assets/styles/variables.css" />
 <style scoped>
 .layout-header {
   height: 60px;
@@ -103,7 +114,7 @@ watch(now, checkExpiration);
 }
 
 .layout-header__nav--colored {
-  width: 300px;
+  width: var(--sidebar-width-expanded);
   transition: width 0.3s ease;
   background-color: var(--layout-surface-02);
 }

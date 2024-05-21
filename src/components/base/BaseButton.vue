@@ -18,9 +18,16 @@ const props = defineProps({
 });
 </script>
 <template>
-  <button class="button" :class="`${props.view}-view`">
+  <button
+    class="button"
+    :class="`button--${props.view}-view`"
+  >
     <slot>
-      <BaseIcon v-if="props.icon" class="button__icon" :name="props.icon" />
+      <BaseIcon
+        v-if="props.icon"
+        class="button__icon"
+        :name="props.icon"
+      />
       <span v-if="props.label" class="button__label">
         {{ props.label }}
       </span>
@@ -30,7 +37,6 @@ const props = defineProps({
   </button>
 </template>
 
-<style src="@/assets/styles/variables.css" />
 <style scoped>
 .button {
   position: relative;
@@ -54,7 +60,7 @@ const props = defineProps({
   }
 }
 
-.primary-view {
+.button--primary-view {
   padding: 14px 32px;
   border: none;
   border-radius: 8px;
@@ -66,7 +72,7 @@ const props = defineProps({
   }
 }
 
-.secondary-view {
+.button--secondary-view {
   background: none;
   border: none;
   width: 60px;

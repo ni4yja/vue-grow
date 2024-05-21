@@ -13,7 +13,9 @@ const iconPath = ref('');
 watchEffect(async () => {
   if (props.name) {
     try {
-      const module = await import(`../../assets/icons/${props.name}.svg`);
+      const module = await import(
+        `../../assets/icons/${props.name}.svg`
+      );
       iconPath.value = module.default;
     } catch (error) {
       console.error('Failed to load icon:', error);

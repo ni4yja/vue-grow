@@ -1,42 +1,44 @@
 <script setup>
+import LayoutHeader from '@/components/LayoutHeader.vue';
+import LayoutNavBar from '@/components/LayoutNavBar.vue';
+
 import { useUiStore } from '@/stores/ui.js';
 import { storeToRefs } from 'pinia';
 
 const uiStore = useUiStore();
 const { isNavExpanded } = storeToRefs(uiStore);
 </script>
+
 <template>
-  <main
-    class="layout-main"
-    :class="{
-      'layout-main--collapsed': isNavExpanded,
-    }"
+  <div
+    :class="[
+      'layout-main',
+      { 'layout-main--shrink': !isNavExpanded },
+    ]"
   >
-    <div class="layout-main--content">
-      <slot></slot>
-    </div>
-  </main>
+    <LayoutHeader />
+    <LayoutNavBar />
+    <RouterView />
+  </div>
 </template>
 
+<style src="@/assets/styles/variables.css" />
 <style scoped>
 .layout-main {
-  padding: 24px 18px;
-  grid-area: main;
-  transition: all 0.3s ease;
-}
+  position: relative;
+  display: grid;
+  grid-template-rows: 60px 1fr;
+  grid-template-areas:
+    'header header'
+    'sidebar content';
+  transition: grid-template-columns 0.3s ease;
 
-.layout-main--collapsed {
   @media (min-width: 960px) {
-    padding-left: 300px;
+    grid-template-columns: var(--sidebar-width-expanded) auto;
   }
 }
 
-.layout-main--content {
-  padding: 17px 18px 20px;
-  border-radius: 16px;
-
-  @media (min-width: 960px) {
-    max-width: 800px;
-  }
+.layout-main--shrink {
+  grid-template-columns: var(--sidebar-width-collapsed) auto;
 }
 </style>

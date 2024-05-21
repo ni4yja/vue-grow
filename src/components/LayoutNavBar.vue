@@ -16,13 +16,24 @@ const { isNavExpanded } = storeToRefs(uiStore);
     <ul class="layout-nav-bar__list">
       <li class="layout-nav-bar__item">
         <RouterLink to="/" class="layout-nav-bar__link">
-          <BaseIcon name="house" class="layout-nav-bar__icon" />
-          <span class="layout-nav-bar__text">Dashboard</span>
+          <BaseIcon
+            name="house"
+            class="layout-nav-bar__icon"
+          />
+          <span class="layout-nav-bar__text"
+            >Dashboard</span
+          >
         </RouterLink>
       </li>
       <li class="layout-nav-bar__item">
-        <RouterLink to="/devices" class="layout-nav-bar__link">
-          <BaseIcon name="logo-draw-io" class="layout-nav-bar__icon" />
+        <RouterLink
+          to="/devices"
+          class="layout-nav-bar__link"
+        >
+          <BaseIcon
+            name="logo-draw-io"
+            class="layout-nav-bar__icon"
+          />
           <span class="layout-nav-bar__text">Devices</span>
         </RouterLink>
       </li>
@@ -30,21 +41,23 @@ const { isNavExpanded } = storeToRefs(uiStore);
   </aside>
 </template>
 
-<style src="@/assets/styles/variables.css" />
 <style scoped>
 .layout-nav-bar {
-  width: 60px;
+  position: fixed;
+  width: var(--sidebar-width-collapsed);
   grid-area: sidebar;
   background-color: var(--layout-surface-02);
-  position: fixed;
-  height: 100%;
-  padding-top: 60px;
+  height: 100vh;
 }
 
 .layout-nav-bar--expanded {
-  z-index: 1;
-  width: 300px;
+  width: var(--sidebar-width-expanded);
   transition: width 0.3s ease;
+
+  @media (min-width: 960px) {
+    z-index: 1;
+    position: absolute;
+  }
 
   .layout-nav-bar__item {
     width: 100%;
