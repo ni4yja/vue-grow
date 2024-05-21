@@ -87,7 +87,7 @@ watch(now, checkExpiration);
   height: var(--header-height-fixed);
   grid-area: header;
   background-color: var(--layout-surface-02);
-  z-index: 1;
+  z-index: 11;
 
   @media (min-width: 960px) {
     background-color: var(--layout-surface-01);
@@ -98,7 +98,6 @@ watch(now, checkExpiration);
   position: fixed;
   width: 100%;
   background-color: var(--layout-surface-02);
-  z-index: 10;
 }
 
 .layout-header__wrapper {

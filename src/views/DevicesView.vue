@@ -1,17 +1,19 @@
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useDevicesStore } from '@/stores/devices.js';
 import { useAuthenticationStore } from '@/stores/authentication.js';
+import { useModalStore } from '@/stores/modal.js';
 import { storeToRefs } from 'pinia';
 import BaseButton from '@/components/base/BaseButton.vue';
 import BaseTable from '@/components/base/BaseTable.vue';
-import BaseNotification from '@/components/base/BaseNotification.vue';
 import ContentWrapper from '@/components/ContentWrapper.vue';
 
 const devicesStore = useDevicesStore();
-const { devicesList, fetchErrorMessage } =
-  storeToRefs(devicesStore);
+const { devicesList } = storeToRefs(devicesStore);
 const { setDevicesList } = devicesStore;
+
+const modalStore = useModalStore();
+const { openModal } = modalStore;
 
 const authenticationStore = useAuthenticationStore();
 const { isAuthenticationSuccessful } = storeToRefs(
@@ -24,26 +26,7 @@ const columns = ref([
   { field: 'status', label: 'Status' },
 ]);
 
-const shouldShowTable = computed(() => {
-  return (
-    isAuthenticationSuccessful.value &&
-    devicesList.value.length
-  );
-});
-
-const shouldShowWarning = computed(() => {
-  return (
-    isAuthenticationSuccessful.value &&
-    !devicesList.value.length
-  );
-});
-
-const shouldShowError = computed(() => {
-  return (
-    fetchErrorMessage.value &&
-    fetchErrorMessage.value.length > 0
-  );
-});
+setDevicesList();
 </script>
 
 <template>
@@ -51,13 +34,14 @@ const shouldShowError = computed(() => {
     <div class="devices-view--actions">
       <h2 class="devices-view--title">Connected Devices</h2>
       <BaseButton
-        @click="setDevicesList"
+        v-if="!isAuthenticationSuccessful"
+        @click="openModal"
         class="devices-view--button"
-        label="Fetch Devices"
+        label="Login to see devices"
       />
     </div>
     <BaseTable
-      v-if="shouldShowTable"
+      v-if="isAuthenticationSuccessful"
       :items="devicesList"
       :columns="columns"
     >
@@ -71,16 +55,6 @@ const shouldShowError = computed(() => {
         <span>{{ item.status.description }}</span>
       </template>
     </BaseTable>
-    <BaseNotification
-      v-if="shouldShowWarning"
-      view="warning"
-      text="Your device list is empty. Click the button to fetch devices."
-    />
-    <BaseNotification
-      v-if="shouldShowError"
-      view="error"
-      :text="fetchErrorMessage"
-    />
   </ContentWrapper>
 </template>
 

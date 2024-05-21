@@ -53,12 +53,9 @@ const { isNavExpanded } = storeToRefs(uiStore);
 }
 
 .layout-nav-bar--expanded {
+  z-index: 1;
   width: var(--sidebar-width-expanded);
   transition: width 0.3s ease;
-
-  @media (min-width: 960px) {
-    position: absolute;
-  }
 
   .layout-nav-bar__item {
     width: 100%;

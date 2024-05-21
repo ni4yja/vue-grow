@@ -2,8 +2,6 @@ import { ref } from 'vue';
 import { defineStore } from 'pinia';
 import { useLocalStorage } from '@vueuse/core';
 import { authenticate } from '@/services/authService';
-import { useDevicesStore } from '@/stores/devices.js';
-import { storeToRefs } from 'pinia';
 
 export const useAuthenticationStore = defineStore(
   'authentication',
@@ -25,15 +23,11 @@ export const useAuthenticationStore = defineStore(
     }
 
     async function handleAuthentication(appTokenValue) {
-      const devicesStore = useDevicesStore();
-      const { fetchErrorMessage } =
-        storeToRefs(devicesStore);
       try {
         const data = await authenticate(appTokenValue);
         setAuthToken(data.auth_token);
         isAuthenticationSuccessful.value = true;
         authErrorMessage.value = '';
-        fetchErrorMessage.value = '';
       } catch (error) {
         authErrorMessage.value = `Authentication failed because of ${error}`;
         isAuthenticationSuccessful.value = false;

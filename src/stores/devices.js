@@ -1,27 +1,33 @@
 import { ref } from 'vue';
 import { defineStore } from 'pinia';
-import { useLocalStorage } from '@vueuse/core';
 import { fetchDevices } from '@/services/devicesService.js';
+import { useAuthenticationStore } from '@/stores/authentication.js';
+import { storeToRefs } from 'pinia';
 
 export const useDevicesStore = defineStore(
   'devices',
   () => {
-    const devicesList = ref(
-      useLocalStorage('devicesList', []),
-    );
+    const devicesList = ref([]);
     const fetchErrorMessage = ref('');
 
+    const authenticationStore = useAuthenticationStore();
+    const { isAuthenticationSuccessful } = storeToRefs(
+      authenticationStore,
+    );
+
     async function setDevicesList() {
-      try {
-        devicesList.value = await fetchDevices({
-          filter: { and: [], or: [] },
-          page: 1,
-          per_page: 5,
-          sorting: [],
-        });
-        fetchErrorMessage.value = '';
-      } catch (error) {
-        fetchErrorMessage.value = `Failed to fetch devices because of ${error}`;
+      if (isAuthenticationSuccessful.value) {
+        try {
+          devicesList.value = await fetchDevices({
+            filter: { and: [], or: [] },
+            page: 1,
+            per_page: 5,
+            sorting: [],
+          });
+          fetchErrorMessage.value = '';
+        } catch (error) {
+          fetchErrorMessage.value = `Failed to fetch devices because of ${error}`;
+        }
       }
     }
 
