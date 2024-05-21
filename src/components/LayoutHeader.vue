@@ -84,7 +84,7 @@ watch(now, checkExpiration);
 
 <style scoped>
 .layout-header {
-  height: 60px;
+  height: var(--header-height-fixed);
   grid-area: header;
   background-color: var(--layout-surface-02);
   z-index: 1;
@@ -98,6 +98,7 @@ watch(now, checkExpiration);
   position: fixed;
   width: 100%;
   background-color: var(--layout-surface-02);
+  z-index: 10;
 }
 
 .layout-header__wrapper {
@@ -110,7 +111,7 @@ watch(now, checkExpiration);
 
 .layout-header__nav {
   position: relative;
-  width: 60px;
+  width: var(--sidebar-width-collapsed);
 }
 
 .layout-header__nav--colored {

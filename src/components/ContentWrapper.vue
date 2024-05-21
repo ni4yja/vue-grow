@@ -10,6 +10,7 @@
 
 <style scoped>
 .content-wrapper {
+  box-sizing: border-box;
   grid-area: content;
   padding: 24px;
 }

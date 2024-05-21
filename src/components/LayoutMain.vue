@@ -27,7 +27,8 @@ const { isNavExpanded } = storeToRefs(uiStore);
 .layout-main {
   position: relative;
   display: grid;
-  grid-template-rows: 60px 1fr;
+  grid-template-rows: (var(--header-height-fixed)) 1fr;
+  grid-template-columns: var(--sidebar-width-collapsed) auto;
   grid-template-areas:
     'header header'
     'sidebar content';

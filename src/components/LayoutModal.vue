@@ -93,6 +93,8 @@ function handleClose() {
   width: 100%;
   height: 100%;
   background: rgb(0 0 0 / 28%);
+  -webkit-appearance: none;
+  border: none;
 }
 
 .modal__close-button {

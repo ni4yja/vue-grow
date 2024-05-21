@@ -44,10 +44,12 @@ const { isNavExpanded } = storeToRefs(uiStore);
 <style scoped>
 .layout-nav-bar {
   position: fixed;
+  top: 0;
   width: var(--sidebar-width-collapsed);
   grid-area: sidebar;
   background-color: var(--layout-surface-02);
   height: 100vh;
+  padding-top: calc(var(--header-height-fixed) + 24px);
 }
 
 .layout-nav-bar--expanded {
@@ -55,7 +57,6 @@ const { isNavExpanded } = storeToRefs(uiStore);
   transition: width 0.3s ease;
 
   @media (min-width: 960px) {
-    z-index: 1;
     position: absolute;
   }
 
@@ -81,7 +82,6 @@ const { isNavExpanded } = storeToRefs(uiStore);
 }
 .layout-nav-bar__list {
   margin: 0;
-  margin-top: 32px;
   padding: 0;
   display: flex;
   flex-direction: column;
