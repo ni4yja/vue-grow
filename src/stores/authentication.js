@@ -14,6 +14,7 @@ export const useAuthenticationStore = defineStore(
       useLocalStorage('isAuthenticationSuccessful', false),
     );
     const authErrorMessage = ref('');
+    const isLoading = ref(false);
 
     function setAuthToken(authTokenValue) {
       authToken.value = authTokenValue;
@@ -24,9 +25,11 @@ export const useAuthenticationStore = defineStore(
 
     async function handleAuthentication(appTokenValue) {
       try {
+        isLoading.value = true;
         const data = await authenticate(appTokenValue);
         setAuthToken(data.auth_token);
         isAuthenticationSuccessful.value = true;
+        isLoading.value = false;
         authErrorMessage.value = '';
       } catch (error) {
         authErrorMessage.value = `Authentication failed because of ${error}`;
@@ -47,6 +50,7 @@ export const useAuthenticationStore = defineStore(
       authTokenExpiry,
       isAuthenticationSuccessful,
       authErrorMessage,
+      isLoading,
       handleAuthentication,
       clearAuthToken,
     };

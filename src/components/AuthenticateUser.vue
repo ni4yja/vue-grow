@@ -4,6 +4,7 @@ import { storeToRefs } from 'pinia';
 import { useModalStore } from '@/stores/modal.js';
 import { useAuthenticationStore } from '@/stores/authentication.js';
 import BaseButton from '@/components/base/BaseButton.vue';
+import BaseIcon from '@/components/base/BaseIcon.vue';
 import BaseNotification from '@/components/base/BaseNotification.vue';
 
 const modalStore = useModalStore();
@@ -12,8 +13,11 @@ const { closeModal } = modalStore;
 const applicationToken = ref('');
 
 const authenticationStore = useAuthenticationStore();
-const { isAuthenticationSuccessful, authErrorMessage } =
-  storeToRefs(authenticationStore);
+const {
+  isAuthenticationSuccessful,
+  authErrorMessage,
+  isLoading,
+} = storeToRefs(authenticationStore);
 const { handleAuthentication } = authenticationStore;
 
 function authenticateUser() {
@@ -54,6 +58,15 @@ const showErrorMessage = computed(() => {
         label="Authenticate"
       />
     </div>
+    <div
+      v-if="isLoading"
+      class="authenticate-user__field authenticate-user__field--loading"
+    >
+      <BaseIcon
+        :name="'dots-scale-rotate'"
+        class="authenticate-user__loading-icon"
+      />
+    </div>
     <BaseNotification
       v-if="isAuthenticationSuccessful"
       view="success"
@@ -91,6 +104,10 @@ const showErrorMessage = computed(() => {
   margin-bottom: 2rem;
 }
 
+.authenticate-user__field--loading {
+  align-items: center;
+}
+
 .authenticate-user__input {
   padding: 0.5rem;
   width: 100%;
@@ -100,5 +117,10 @@ const showErrorMessage = computed(() => {
 .authenticate-user__button {
   flex: 1;
   width: 100%;
+}
+
+.authenticate-user__loading-icon {
+  width: 40px;
+  height: 40px;
 }
 </style>
