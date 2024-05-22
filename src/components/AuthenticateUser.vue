@@ -3,12 +3,16 @@ import { ref, computed } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useModalStore } from '@/stores/modal.js';
 import { useAuthenticationStore } from '@/stores/authentication.js';
+import { useDevicesStore } from '@/stores/devices.js';
 import BaseButton from '@/components/base/BaseButton.vue';
 import BaseIcon from '@/components/base/BaseIcon.vue';
 import BaseNotification from '@/components/base/BaseNotification.vue';
 
 const modalStore = useModalStore();
 const { closeModal } = modalStore;
+
+const devicesStore = useDevicesStore();
+const { setDevicesList } = devicesStore;
 
 const applicationToken = ref('');
 
@@ -30,6 +34,11 @@ const showErrorMessage = computed(() => {
     !isAuthenticationSuccessful.value
   );
 });
+
+function goToDevices() {
+  setDevicesList();
+  closeModal();
+}
 </script>
 
 <template>
@@ -67,11 +76,17 @@ const showErrorMessage = computed(() => {
         class="authenticate-user__loading-icon"
       />
     </div>
-    <BaseNotification
-      v-if="isAuthenticationSuccessful"
-      view="success"
-      text="Your token worked. You're successfully authenticated."
-    />
+    <template v-if="isAuthenticationSuccessful">
+      <BaseNotification
+        view="success"
+        text="Your token worked. You're successfully authenticated."
+      />
+      <BaseButton
+        class="authenticate-user__button"
+        @click="goToDevices"
+        label="Go to devices"
+      />
+    </template>
     <BaseNotification
       v-if="showErrorMessage"
       view="error"

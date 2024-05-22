@@ -20,13 +20,9 @@ const { isAuthenticationSuccessful } = storeToRefs(
   authenticationStore,
 );
 
-const columns = ref([
-  { field: 'name', label: 'Name' },
-  { field: 'id', label: 'ID' },
-  { field: 'status', label: 'Status' },
-]);
-
-setDevicesList();
+onMounted(() => {
+  setDevicesList();
+});
 </script>
 
 <template>
@@ -43,7 +39,6 @@ setDevicesList();
     <BaseTable
       v-if="isAuthenticationSuccessful"
       :items="devicesList"
-      :columns="columns"
     >
       <template #name="{ item }">
         <span>{{ item.name }}</span>
