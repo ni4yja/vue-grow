@@ -1,7 +1,9 @@
 <script setup></script>
 
 <template>
-  <div class="table-item"></div>
+  <div class="table-item">
+    <slot></slot>
+  </div>
 </template>
 
 <style scoped>
