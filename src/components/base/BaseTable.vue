@@ -2,8 +2,13 @@
 
 <template>
   <div class="table">
-    <slot></slot>
+    <div class="table-row"><slot></slot></div>
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.table-row {
+  @media (min-width: 960px) {
+  }
+}
+</style>

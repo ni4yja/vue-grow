@@ -39,7 +39,7 @@ onMounted(() => {
     <DevicesTable
       v-if="isAuthenticationSuccessful"
       :devices="devicesList"
-    ></DevicesTable>
+    />
   </ContentWrapper>
 </template>
 

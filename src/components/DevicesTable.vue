@@ -12,7 +12,7 @@ const props = defineProps({
 <template>
   <BaseTable>
     <DevicesTableItem
-      v-for="device in devices"
+      v-for="device in props.devices"
       :key="device.id"
       :device="device"
     />
