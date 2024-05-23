@@ -1,21 +1,8 @@
-<script setup>
-import BaseTableItem from '@/components/base/BaseTableItem.vue';
-
-const props = defineProps({
-  items: {
-    type: Array,
-    required: true,
-  },
-});
-</script>
+<script setup></script>
 
 <template>
   <div class="table">
-    <BaseTableItem
-      v-for="device in props.items"
-      :key="device.id"
-      :item="device"
-    />
+    <slot></slot>
   </div>
 </template>
 

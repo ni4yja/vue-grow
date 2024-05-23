@@ -1,11 +1,11 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { onMounted } from 'vue';
 import { useDevicesStore } from '@/stores/devices.js';
 import { useAuthenticationStore } from '@/stores/authentication.js';
 import { useModalStore } from '@/stores/modal.js';
 import { storeToRefs } from 'pinia';
 import BaseButton from '@/components/base/BaseButton.vue';
-import BaseTable from '@/components/base/BaseTable.vue';
+import DevicesTable from '@/components/DevicesTable.vue';
 import ContentWrapper from '@/components/ContentWrapper.vue';
 
 const devicesStore = useDevicesStore();
@@ -36,20 +36,10 @@ onMounted(() => {
         label="Login to see devices"
       />
     </div>
-    <BaseTable
+    <DevicesTable
       v-if="isAuthenticationSuccessful"
-      :items="devicesList"
-    >
-      <template #name="{ item }">
-        <span>{{ item.name }}</span>
-      </template>
-      <template #id="{ item }">
-        <span>{{ item.id }}</span>
-      </template>
-      <template #status="{ item }">
-        <span>{{ item.status.description }}</span>
-      </template>
-    </BaseTable>
+      :devices="devicesList"
+    ></DevicesTable>
   </ContentWrapper>
 </template>
 
@@ -59,8 +49,10 @@ onMounted(() => {
   flex-direction: column;
   gap: 1rem;
   margin-bottom: 2rem;
+}
 
-  @media (min-width: 960px) {
+@media (min-width: 960px) {
+  .devices-view--actions {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
@@ -74,8 +66,10 @@ onMounted(() => {
 .devices-view--button {
   flex: 1;
   width: 100%;
+}
 
-  @media (min-width: 960px) {
+@media (min-width: 960px) {
+  .devices-view--button {
     flex: initial;
     width: fit-content;
   }
