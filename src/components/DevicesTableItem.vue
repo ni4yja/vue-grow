@@ -2,6 +2,7 @@
 import { computed, toRefs } from 'vue';
 import BaseTableItem from '@/components/base/BaseTableItem.vue';
 import BaseTableCell from '@/components/base/BaseTableCell.vue';
+import BaseButton from '@/components/base/BaseButton.vue';
 
 const props = defineProps({
   device: {
@@ -31,21 +32,31 @@ const deviceCellInfo = computed(() => {
       title: device.value.name,
       content: device.value.tags,
       hasTags: true,
+      hasActions: false,
     },
     {
       title: 'Status',
       content: device.value.status?.description || '',
       hasTags: false,
+      hasActions: false,
     },
     {
       title: 'Cellular usage',
       content: cellularDataUsage.value || 'no usage',
       hasTags: false,
+      hasActions: false,
     },
     {
       title: 'Satellite usage',
       content: satelliteDataUsage.value || 'no usage',
       hasTags: false,
+      hasActions: false,
+    },
+    {
+      title: '',
+      content: ['refresh', 'cancel', 'message'],
+      hasTags: false,
+      hasActions: true,
     },
   ];
 });
@@ -58,26 +69,68 @@ const deviceCellInfo = computed(() => {
       :key="cell.title"
       :title="cell.title"
       :content="cell.content"
+      class="devices-table-cell"
     >
-      <template #tags v-if="cell.hasTags && device.tags">
-        <ul class="devices-table-item__tags-list">
-          <li v-for="tag in deviceTagsList" :key="tag">
-            <span class="devices-table-item__tags-item">{{
+      <template
+        v-if="cell.hasTags || cell.hasActions"
+        #custom
+      >
+        <ul
+          v-if="cell.hasTags"
+          class="devices-table-item__tags-list"
+        >
+          <li
+            class="devices-table-item__tags-list-item"
+            v-for="tag in deviceTagsList"
+            :key="tag"
+          >
+            <span class="devices-table-item__tag">{{
               tag
             }}</span>
           </li>
         </ul>
+        <div
+          v-if="cell.hasActions"
+          class="devices-table-item__actions"
+        >
+          <BaseButton
+            v-for="icon in cell.content"
+            :key="icon"
+            :icon="icon"
+            view="secondary"
+          />
+        </div>
       </template>
     </BaseTableCell>
   </BaseTableItem>
 </template>
 
 <style scoped>
-.devices-table-item__tags-item {
-  display: inline-block;
-  background-color: #f0f0f0;
+.devices-table-item {
+  @media (min-width: 960px) {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  }
+}
+.devices-table-item__tags-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 4px;
+}
+.devices-table-item__tag {
   padding: 4px 8px;
-  margin-right: 4px;
   border-radius: 4px;
+  background-color: var(--primary-03);
+  font-size: 14px;
+  font-weight: 400;
+  box-sizing: border-box;
+  display: inline-flex;
+  margin-bottom: 4px;
+}
+
+.devices-table-item__actions {
+  display: flex;
+  gap: 4px;
 }
 </style>

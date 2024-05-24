@@ -17,18 +17,24 @@ const slots = useSlots();
 
 <template>
   <div class="table-cell">
-    <div class="table-cell__title">{{ props.title }}</div>
-    <div
-      v-if="slots.tags"
-      class="table-cell__content table-cell__content--tags"
-    >
-      <slot name="tags">{{ props.content }}</slot>
+    <div class="table-cell__box table-cell__box--title">
+      <p class="table-cell__title">
+        {{ props.title }}
+      </p>
     </div>
     <div
-      v-else
-      class="table-cell__content table-cell__content--description"
+      v-if="slots.custom"
+      class="table-cell__box table-cell__box--custom"
     >
-      <p>{{ props.content }}</p>
+      <slot name="custom">{{ props.content }}</slot>
+    </div>
+    <div
+      v-if="!slots.custom"
+      class="table-cell__box table-cell__box--description"
+    >
+      <p class="table-cell__description">
+        {{ props.content }}
+      </p>
     </div>
   </div>
 </template>
@@ -37,5 +43,26 @@ const slots = useSlots();
 .table-cell {
   padding: 16px 8px;
   border-bottom: 1px solid #ddd;
+
+  &:last-child {
+    border-bottom: 0;
+  }
+
+  @media (min-width: 960px) {
+    border-bottom: 0;
+  }
+}
+
+.table-cell__box {
+  line-height: 20px;
+}
+
+.table-cell__title {
+  font-size: 14px;
+}
+
+.table-cell__description {
+  font-size: 14px;
+  font-weight: 700;
 }
 </style>
