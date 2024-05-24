@@ -15,4 +15,9 @@
   --sidebar-width-collapsed: 60px;
   --sidebar-width-expanded: 300px;
   --header-height-fixed: 60px;
+
+  --grid-template-columns: minmax(200px, 250px)
+    minmax(120px, 152px) minmax(120px, 152px)
+    minmax(120px, 152px) minmax(120px, 152px)
+    minmax(200px, 250px);
 }

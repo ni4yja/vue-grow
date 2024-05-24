@@ -50,6 +50,7 @@ const slots = useSlots();
 
   @media (min-width: 960px) {
     border-bottom: 0;
+    padding: 0;
   }
 }
 

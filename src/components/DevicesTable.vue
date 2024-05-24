@@ -8,9 +8,17 @@ const props = defineProps({
     required: true,
   },
 });
+
+const devicesHeaderList = [
+  'Name',
+  'Status',
+  'Connection',
+  'Cellular usage',
+  'Satellite usage',
+];
 </script>
 <template>
-  <BaseTable>
+  <BaseTable :header-list="devicesHeaderList">
     <DevicesTableItem
       v-for="device in props.devices"
       :key="device.id"

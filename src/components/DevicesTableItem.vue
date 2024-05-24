@@ -41,6 +41,12 @@ const deviceCellInfo = computed(() => {
       hasActions: false,
     },
     {
+      title: 'Connection',
+      content: device.value.connectivity?.status || '',
+      hasTags: false,
+      hasActions: false,
+    },
+    {
       title: 'Cellular usage',
       content: cellularDataUsage.value || 'no usage',
       hasTags: false,
@@ -109,15 +115,18 @@ const deviceCellInfo = computed(() => {
 .devices-table-item {
   @media (min-width: 960px) {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: var(--grid-template-columns);
+    column-gap: 10px;
   }
 }
+
 .devices-table-item__tags-list {
   display: flex;
   flex-wrap: wrap;
   gap: 4px;
   margin-top: 4px;
 }
+
 .devices-table-item__tag {
   padding: 4px 8px;
   border-radius: 4px;
