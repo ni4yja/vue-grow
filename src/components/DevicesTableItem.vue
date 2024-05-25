@@ -118,6 +118,16 @@ const deviceCellInfo = computed(() => {
     grid-template-columns: var(--grid-template-columns);
     column-gap: 10px;
   }
+
+  &:hover {
+    @media (min-width: 960px) {
+      box-shadow: 0 3px 3px -3px var(--layout-surface-03);
+
+      .devices-table-item__actions {
+        visibility: visible;
+      }
+    }
+  }
 }
 
 .devices-table-item__tags-list {
@@ -144,6 +154,7 @@ const deviceCellInfo = computed(() => {
 
   @media (min-width: 960px) {
     justify-content: flex-end;
+    visibility: hidden;
   }
 }
 </style>

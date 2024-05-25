@@ -66,6 +66,7 @@ const slots = useSlots();
 
 .table-cell__box {
   line-height: 20px;
+  width: 100%;
 }
 
 .table-cell__title {

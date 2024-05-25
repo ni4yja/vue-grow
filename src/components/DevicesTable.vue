@@ -26,7 +26,3 @@ const devicesHeaderList = [
     />
   </BaseTable>
 </template>
-
-<style scoped>
-/* Component CSS here */
-</style>
