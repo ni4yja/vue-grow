@@ -141,5 +141,9 @@ const deviceCellInfo = computed(() => {
 .devices-table-item__actions {
   display: flex;
   gap: 4px;
+
+  @media (min-width: 960px) {
+    justify-content: flex-end;
+  }
 }
 </style>

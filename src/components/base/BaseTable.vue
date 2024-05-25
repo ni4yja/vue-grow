@@ -36,6 +36,10 @@ const props = defineProps({
 </template>
 
 <style scoped>
+.table-row {
+  box-sizing: border-box;
+}
+
 .table-row--header {
   display: none;
 
@@ -53,6 +57,7 @@ const props = defineProps({
     display: grid;
     grid-template-columns: var(--grid-template-columns);
     column-gap: 10px;
+    width: 100%;
   }
 }
 

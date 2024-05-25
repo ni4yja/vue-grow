@@ -8,6 +8,7 @@
 
 <style scoped>
 .table-item {
+  box-sizing: border-box;
   padding: 24px 16px 24px 36px;
   border: 1px solid #cdcdcd;
   margin-bottom: 8px;
