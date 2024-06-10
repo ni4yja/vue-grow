@@ -21,7 +21,7 @@ export const useDevicesStore = defineStore(
           devicesList.value = await fetchDevices({
             filter: { and: [], or: [] },
             page: 1,
-            per_page: 5,
+            per_page: 10,
             sorting: [],
           });
           fetchErrorMessage.value = '';
