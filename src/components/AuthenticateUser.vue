@@ -3,7 +3,6 @@ import { ref, computed } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useModalStore } from '@/stores/modal.js';
 import { useAuthenticationStore } from '@/stores/authentication.js';
-import { useDevicesStore } from '@/stores/devices.js';
 import BaseButton from '@/components/base/BaseButton.vue';
 import BaseIcon from '@/components/base/BaseIcon.vue';
 import BaseNotification from '@/components/base/BaseNotification.vue';
@@ -13,9 +12,6 @@ const router = useRouter();
 
 const modalStore = useModalStore();
 const { closeModal } = modalStore;
-
-const devicesStore = useDevicesStore();
-const { setDevicesList } = devicesStore;
 
 const applicationToken = ref('');
 
@@ -39,7 +35,6 @@ const showErrorMessage = computed(() => {
 });
 
 function goToDevices() {
-  setDevicesList();
   closeModal();
   router.push({ path: '/devices' });
 }
@@ -49,21 +44,53 @@ function goToDevices() {
   <div class="authenticate-user">
     <div class="authenticate-user__header">
       <h2>Authentication with your Application Token</h2>
-      <BaseButton @click="closeModal" icon="xmark" view="secondary" />
+      <BaseButton
+        @click="closeModal"
+        icon="xmark"
+        view="secondary"
+      />
     </div>
-    <div v-if="!isAuthenticationSuccessful" class="authenticate-user__field">
-      <input type="text" class="authenticate-user__input" v-model="applicationToken"
-        placeholder="Enter your application token" />
-      <BaseButton class="authenticate-user__button" @click="authenticateUser" label="Authenticate" />
+    <div
+      v-if="!isAuthenticationSuccessful"
+      class="authenticate-user__field"
+    >
+      <input
+        type="text"
+        class="authenticate-user__input"
+        v-model="applicationToken"
+        placeholder="Enter your application token"
+      />
+      <BaseButton
+        class="authenticate-user__button"
+        @click="authenticateUser"
+        label="Authenticate"
+      />
     </div>
-    <div v-if="isLoading" class="authenticate-user__field authenticate-user__field--loading">
-      <BaseIcon :name="'dots-scale-rotate'" class="authenticate-user__loading-icon" />
+    <div
+      v-if="isLoading"
+      class="authenticate-user__field authenticate-user__field--loading"
+    >
+      <BaseIcon
+        :name="'dots-scale-rotate'"
+        class="authenticate-user__loading-icon"
+      />
     </div>
     <template v-if="isAuthenticationSuccessful">
-      <BaseNotification view="success" text="Your token worked. You're successfully authenticated." />
-      <BaseButton class="authenticate-user__button" @click="goToDevices" label="Go to devices" />
+      <BaseNotification
+        view="success"
+        text="Your token worked. You're successfully authenticated."
+      />
+      <BaseButton
+        class="authenticate-user__button"
+        @click="goToDevices"
+        label="Go to devices"
+      />
     </template>
-    <BaseNotification v-if="showErrorMessage" view="error" :text="authErrorMessage" />
+    <BaseNotification
+      v-if="showErrorMessage"
+      view="error"
+      :text="authErrorMessage"
+    />
   </div>
 </template>
 

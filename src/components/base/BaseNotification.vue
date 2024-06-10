@@ -2,7 +2,15 @@
 const props = defineProps({
   view: {
     type: String,
-    required: true,
+    default: 'info',
+    validator(value) {
+      return [
+        'success',
+        'warning',
+        'error',
+        'info',
+      ].includes(value);
+    },
   },
   text: {
     type: String,

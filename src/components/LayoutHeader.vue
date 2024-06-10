@@ -31,7 +31,7 @@ const isHeaderFixed = ref(false);
 const { y } = useWindowScroll();
 
 watchEffect(() => {
-  isHeaderFixed.value = y.value > 100;
+  isHeaderFixed.value = y.value > 60;
 });
 
 const now = useNow({ interval: 10000 });

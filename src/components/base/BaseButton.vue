@@ -31,8 +31,6 @@ const props = defineProps({
       <span v-if="props.label" class="button__label">
         {{ props.label }}
       </span>
-
-      <span v-if="props.isLoading" class="button__loader" />
     </slot>
   </button>
 </template>

@@ -1,5 +1,4 @@
 <script setup>
-import { onMounted } from 'vue';
 import { useDevicesStore } from '@/stores/devices.js';
 import { useAuthenticationStore } from '@/stores/authentication.js';
 import { useModalStore } from '@/stores/modal.js';
@@ -11,6 +10,7 @@ import ContentWrapper from '@/components/ContentWrapper.vue';
 const devicesStore = useDevicesStore();
 const { devicesList } = storeToRefs(devicesStore);
 const { setDevicesList } = devicesStore;
+setDevicesList();
 
 const modalStore = useModalStore();
 const { openModal } = modalStore;
@@ -19,10 +19,6 @@ const authenticationStore = useAuthenticationStore();
 const { isAuthenticationSuccessful } = storeToRefs(
   authenticationStore,
 );
-
-onMounted(() => {
-  setDevicesList();
-});
 </script>
 
 <template>
